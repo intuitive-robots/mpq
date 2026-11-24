@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Does a Skill Vocabulary Cost?</title>
+<meta name="description" content="Placed after a trained policy, a library of demonstrated motions costs no success, and it shows that discrete skill policies lose success in executing a chosen motion, not in choosing it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intuitive-robots.github.io/mpq/">
+<meta property="og:title" content="What Does a Skill Vocabulary Cost? A Closed-Loop Decomposition over Demonstrated Motions">
+<meta property="og:description" content="Movement Prototype Quantization (MPQ): a library of demonstrated motions placed after a trained policy, and where discrete skill policies lose success.">
+<meta property="og:image" content="https://intuitive-robots.github.io/mpq/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1d1d1f; --muted: #5f6368; --rule: #e3e3e6; --card: #f6f6f8;
+    --accent: #2563c9; --line: #2f7cf6; --band: rgba(29, 29, 31, 0.08); --grid: #ececef;
+    --button-bg: #1d1d1f; --button-fg: #ffffff; --code-bg: #f5f5f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141416; --fg: #ececf0; --muted: #a0a0a8; --rule: #2c2c31; --card: #1c1c20;
+      --accent: #7aa7ff; --line: #7aa7ff; --band: rgba(236, 236, 240, 0.10); --grid: #26262b;
+      --button-bg: #ececf0; --button-fg: #141416; --code-bg: #1f1f23;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 16px 40px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.2; text-align: center; margin: 0 0 16px; }
+  .tldr { text-align: center; color: var(--muted); font-size: 1.08rem; max-width: 720px; margin: 0 auto 20px; }
+  .authors, .affiliations { text-align: center; margin: 0; }
+  .authors { font-size: 1.05rem; }
+  .affiliations { color: var(--muted); font-size: 0.95rem; margin-top: 6px; }
+  sup { font-size: 0.7em; }
+  .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 24px 0 32px; }
+  .links a, .links span {
+    display: inline-block; padding: 8px 18px; border-radius: 999px; font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; background: var(--button-bg); color: var(--button-fg);
+  }
+  .links span { opacity: 0.45; cursor: default; }
+  h2 { font-size: 1.3rem; border-bottom: 1px solid var(--rule); padding-bottom: 6px; margin: 48px 0 16px; }
+  p { margin: 0 0 14px; }
+  a { color: var(--accent); }
+
+  /* figures break out of the text column */
+  .wide { width: min(1040px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
+  .anim { margin: 0 0 20px; }
+  .anim video {
+    width: 100%; height: auto; display: block; background: var(--bg); border-radius: 8px;
+    border: 1px solid var(--rule);
+  }
+  figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 10px; }
+
+  .findings { list-style: none; padding: 0; margin: 8px 0 0; border-top: 1px solid var(--rule); }
+  .findings li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .findings .num { font-size: 1.9rem; line-height: 1; font-weight: 300; color: var(--line); font-variant-numeric: tabular-nums; }
+  .findings h3 { font-size: 1.02rem; margin: 2px 0 4px; }
+  .findings p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .findings .where { font-size: 0.8rem; white-space: nowrap; }
+
+  .chart { position: relative; margin: 4px 0 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 640px) { .chart { grid-template-columns: 1fr; gap: 12px; } }
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart text { font-family: inherit; fill: var(--muted); font-size: 13px; }
+  .chart .title { fill: var(--fg); font-size: 14px; font-weight: 600; }
+  .chart .note { fill: var(--fg); font-size: 12.5px; }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--bg); color: var(--fg);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 6px 10px; font-size: 0.82rem; line-height: 1.45;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); opacity: 0; transition: opacity 0.1s; white-space: nowrap;
+  }
+  details { margin: 6px 0 14px; font-size: 0.9rem; color: var(--muted); }
+  details table { border-collapse: collapse; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  details th, details td { padding: 3px 14px 3px 0; text-align: right; border-bottom: 1px solid var(--rule); }
+  details th:first-child, details td:first-child { text-align: left; }
+
+  .robot { display: grid; grid-template-columns: 260px 1fr; gap: 24px; align-items: start; }
+  .robot img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  @media (max-width: 640px) { .robot { grid-template-columns: 1fr; } .robot img { max-width: 320px; } }
+
+  .code { position: relative; }
+  pre {
+    background: var(--code-bg); padding: 16px; border-radius: 8px; overflow-x: auto;
+    font-size: 0.82rem; line-height: 1.5; margin: 0 0 14px;
+  }
+  .copy {
+    position: absolute; top: 8px; right: 8px; font: inherit; font-size: 0.78rem; padding: 3px 10px;
+    border-radius: 6px; border: 1px solid var(--rule); background: var(--bg); color: var(--fg); cursor: pointer;
+  }
+
+  footer { border-top: 1px solid var(--rule); margin-top: 56px; padding-top: 24px; text-align: center; }
+  .logos { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; margin-bottom: 16px; }
+  .logos img { height: 44px; width: auto; display: block; }
+  footer p { color: var(--muted); font-size: 0.85rem; max-width: 640px; margin: 0 auto 6px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>What Does a Skill Vocabulary Cost?<br>A Closed-Loop Decomposition over Demonstrated Motions</h1>
+  <p class="tldr">
+    Placed after a trained policy, a library of demonstrated motions costs no success, and it shows that
+    discrete skill policies lose success in executing a chosen motion, not in choosing it.
+  </p>
+  <p class="authors">
+    Maximilian Xiling Li<sup>1</sup>, Nils Blank<sup>1</sup>, Paul Mattes<sup>1</sup>,
+    Pankhuri Vanjani<sup>1</sup>, Rudolf Lioutikov<sup>1,2</sup>
+  </p>
+  <p class="affiliations">
+    <sup>1</sup>Intuitive Robots Lab, Karlsruhe Institute of Technology (KIT) &nbsp;
+    <sup>2</sup>Robotics Institute Germany (RIG)
+  </p>
+
+  <nav class="links">
+    <a href="Li2026_MPQ.pdf">Paper</a>
+    <span title="Coming soon">arXiv</span>
+    <a href="https://github.com/intuitive-robots/mpq">Code</a>
+  </nav>
+
+  <figure class="anim wide">
+    <video autoplay loop muted playsinline
+      aria-label="A policy predicts an action chunk. MPQ matches it to the nearest movement prototype in the library, places that prototype in the chunk's frame, and executes it corrected toward the prediction within a bound given by the prototype's demonstrations.">
+      <source src="teaser/execution-dark.mp4" type="video/mp4" media="(prefers-color-scheme: dark)">
+      <source src="teaser/execution.mp4" type="video/mp4">
+    </video>
+    <figcaption>
+      Movement Prototype Quantization (MPQ) executes a policy's predicted chunk as its nearest movement
+      prototype, corrected toward the prediction within a bound given by the prototype's demonstrations.
+      Nothing is trained.
+    </figcaption>
+  </figure>
+
+  <ol class="findings" aria-label="Findings">
+    <li>
+      <span class="num">1</span>
+      <div><h3>Wrapping a policy costs nothing.</h3>
+        <p>Across six architectures, including a 7B vision-language-action model, the wrapped policy is
+          statistically equivalent to the original, at +0.6 points on average. <span class="where">Sec. 4</span></p></div>
+    </li>
+    <li>
+      <span class="num">2</span>
+      <div><h3>The loss lies in execution, not in the choice.</h3>
+        <p>On LIBERO-90, a selector's choice costs at most 2 points under the reference's placement and
+          correction. Its own placement and correction cost up to 12. <span class="where">Sec. 5</span></p></div>
+    </li>
+    <li>
+      <span class="num">3</span>
+      <div><h3>Offline reconstruction misjudges libraries.</h3>
+        <p>It keeps improving after closed-loop success has saturated, and it ranks highest a library design
+          that costs 5 points in closed loop. <span class="where">Sec. 6</span></p></div>
+    </li>
+  </ol>
+
+  <h2>Abstract</h2>
+  <p>
+    Discrete skill policies execute motions drawn from a finite vocabulary. In most current methods, this
+    vocabulary is a latent codebook learned jointly with a selector and a decoder. When such a policy fails in
+    closed loop, the failure cannot be traced to the vocabulary, to the choice of skill or to its execution. We
+    present Movement Prototype Quantization (MPQ), which places a library of demonstrated motions after a
+    trained policy instead of inside it. MPQ replaces each predicted action chunk with its nearest library
+    element, corrects that element toward the prediction within a bound, and trains no parameters. Across six
+    architectures, including a 7B vision-language-action model, the wrapped policy is statistically equivalent
+    to the original. A reference policy executed through the library is therefore a baseline for any selector
+    over the same library. Substituting a selector's components one at a time attributes its shortfall to them.
+    On LIBERO-90, with selectors on three backbones, quantization costs nothing and the choice of skill costs at
+    most 2 points under the reference's placement and correction. The selectors' own placement and correction
+    account for nearly all of the remaining gap, up to 12 points. Offline reconstruction predicts none of these
+    differences and misjudges library size, design and transfer across benchmark suites.
+  </p>
+
+  <h2>Building the library</h2>
+  <figure class="anim wide">
+    <video autoplay loop muted playsinline
+      aria-label="Demonstration segments pointing in every direction are rotated about gravity into a common frame, grouped by k-means, and each cluster's mean is replaced by its nearest real segment, a movement prototype.">
+      <source src="teaser/library-dark.mp4" type="video/mp4" media="(prefers-color-scheme: dark)">
+      <source src="teaser/library.mp4" type="video/mp4">
+    </video>
+  </figure>
+  <p>
+    Demonstrations are cut into 20-step segments, fit to B-spline control points, and rotated about gravity
+    into a common frame. k-means groups them by the distance between their trajectories, and each cluster
+    mean is replaced by its nearest real segment. The library for LIBERO-90 holds 256 such movement
+    prototypes and takes about two minutes to build.
+  </p>
+
+  <h2>What a skill vocabulary costs</h2>
+  <figure class="anim wide">
+    <video autoplay loop muted playsinline
+      aria-label="Success on LIBERO-90 for three backbones. ACT: 78.8 bare, 80.2 through the library, 79.3 with the selector's choice, 67.1 for the selector. Flow DiT: 81.9, 83.4, 83.0, 83.0. Diffusion Policy: 91.7, 92.9, 92.4, 82.0.">
+      <source src="teaser/costs-dark.mp4" type="video/mp4" media="(prefers-color-scheme: dark)">
+      <source src="teaser/costs.mp4" type="video/mp4">
+    </video>
+  </figure>
+  <p>
+    Because the wrapped policy is statistically equivalent to the original, the reference policy executed
+    through the library is a baseline for any selector over the same library. Substituting the selector's
+    choice, and then its placement and correction, splits its shortfall into selection and execution. On three
+    backbones, the choice costs at most one point in this order, and nearly all of the loss lies in placing
+    and correcting the chosen motion.
+  </p>
+
+  <h2>Offline reconstruction misjudges libraries</h2>
+  <div class="chart wide" id="ksweep" role="img"
+    aria-label="Library size K from 8 to 512. Closed-loop success of wrapped ACT rises from 53.8 to 79.2 at K = 128 and then stays within the interval of bare ACT (79.9). Offline explained variance keeps rising from 83.7 to 96.4.">
+    <div class="tooltip" id="ksweep-tip"></div>
+  </div>
+  <details>
+    <summary>Data</summary>
+    <table id="ksweep-table">
+      <thead><tr><th>K</th><th>success of wrapped ACT (%)</th><th>95% CI over tasks</th><th>explained variance (%)</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </details>
+  <p>
+    Libraries are usually validated by how well they reconstruct the demonstrations. In closed loop, wrapped
+    ACT matches the bare policy from K = 128 onward, while reconstruction keeps improving by another 1.7 points
+    over two further doublings. Selecting K by reconstruction would therefore choose a library several times
+    larger than the task requires. The two criteria also disagree on design. Dividing out amplitude in
+    addition to yaw costs 5 points in closed loop, yet reconstruction ranks that library highest.
+  </p>
+
+  <h2>On a real robot</h2>
+  <div class="robot">
+    <img src="img/robot.jpg" alt="A Franka Panda arm above a table with four colored cubes and two cylinders.">
+    <div>
+      <p>
+        We run a fine-tuned π<sub>0.5</sub> on a Franka Panda in the DROID configuration. The task is to stack
+        one of two cylinders on whichever of four colored cubes the instruction names. The library is built from
+        the 400 fine-tuning demonstrations, and the bound is the one selected in simulation. Since the policy
+        commands absolute poses, the layer converts them to deltas and back.
+      </p>
+      <p>
+        The bare policy succeeds in 15 of 15 attempts and the wrapped policy in 13 of 15 (Fisher exact test,
+        p = 0.48). Both failures are missed grasps. With fifteen attempts per arm, this comparison can resolve
+        only large differences.
+      </p>
+    </div>
+  </div>
+
+  <h2>Use it</h2>
+  <div class="code">
+<pre><code>git clone https://github.com/intuitive-robots/mpq && cd mpq
+pip install -e .</code></pre>
+  </div>
+  <div class="code">
+<pre><code>from mpq import MPQ
+
+layer = MPQ("libraries/libero90_yaw_k256_g5.pt")   # the paper's LIBERO-90 library
+executed = layer.quantize(chunk)                   # [T, 7] end-effector deltas -> [T, 7]</code></pre>
+  </div>
+  <p>
+    The layer needs only torch and numpy. The <a href="https://github.com/intuitive-robots/mpq">README</a>
+    covers building a library from your own robot's demonstrations, robots that command absolute poses, and
+    reproducing the paper's Diffusion Policy results.
+  </p>
+
+  <h2>Citation</h2>
+  <div class="code">
+    <button class="copy" type="button" data-target="bibtex">Copy</button>
+<pre id="bibtex"><code>@article{li2026skillvocabulary,
+  title   = {What Does a Skill Vocabulary Cost? A Closed-Loop Decomposition over Demonstrated Motions},
+  author  = {Li, Maximilian Xiling and Blank, Nils and Mattes, Paul and Vanjani, Pankhuri and Lioutikov, Rudolf},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+  </div>
+
+  <footer>
+    <div class="logos">
+      <a href="https://www.irl.iar.kit.edu" aria-label="Intuitive Robots Lab">
+        <picture>
+          <source srcset="img/irl-dark.svg" media="(prefers-color-scheme: dark)">
+          <img src="img/irl.svg" alt="Intuitive Robots Lab">
+        </picture>
+      </a>
+      <a href="https://robotics-institute-germany.de" aria-label="Robotics Institute Germany">
+        <picture>
+          <source srcset="img/rig-dark.svg" media="(prefers-color-scheme: dark)">
+          <img src="img/rig.svg" alt="Robotics Institute Germany">
+        </picture>
+      </a>
+    </div>
+    <p>The work was funded by the German Research Foundation (DFG) – 448648559. The authors gratefully
+      acknowledge the support of the Robotics Institute Germany (RIG).</p>
+    <p>Intuitive Robots Lab, Karlsruhe Institute of Technology</p>
+  </footer>
+</main>
+
+<script>
+// Library-size sweep (paper Sec. 6.1, Fig. 4b-c): wrapped ACT on LIBERO-90, seed 0, beta = 0.5.
+const K = [8, 16, 32, 64, 128, 256, 512];
+const SUCCESS = [53.8, 64.1, 73.9, 76.0, 79.2, 79.4, 80.1];
+const CI = [[47.2, 60.2], [58.3, 69.6], [68.9, 78.7], [71.0, 80.7], [74.4, 83.8], [74.9, 83.8], [75.4, 84.4]];
+const EV = [83.7, 88.9, 91.9, 93.5, 94.7, 95.7, 96.4];
+const BARE_CI = [75.2, 84.2];
+
+(function ksweep() {
+  const box = document.getElementById("ksweep"), tip = document.getElementById("ksweep-tip");
+  // One SVG per panel: side by side on wide screens, stacked on phones (grid in CSS).
+  const W = 508, H = 300, NS = "http://www.w3.org/2000/svg";
+  const panels = [
+    { x0: 46, x1: 500, y: [50, 90], ticks: [50, 60, 70, 80, 90], title: "Closed loop: success of wrapped ACT (%)",
+      values: SUCCESS, ci: CI },
+    { x0: 46, x1: 500, y: [82, 98], ticks: [82, 86, 90, 94, 98], title: "Offline: explained variance of the demonstrations (%)",
+      values: EV },
+  ];
+  const top = 42, bottom = 236;
+  let svg;
+  const el = (name, attrs, parent = svg) => {
+    const e = document.createElementNS(NS, name);
+    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+    parent.appendChild(e);
+    return e;
+  };
+  const text = (x, y, s, attrs = {}) => { const t = el("text", { x, y, ...attrs }); t.textContent = s; return t; };
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const px = (p, i) => p.x0 + 12 + i * ((p.x1 - p.x0 - 24) / (K.length - 1));
+  const py = (p, v) => bottom - (v - p.y[0]) / (p.y[1] - p.y[0]) * (bottom - top);
+  const marks = [];
+
+  panels.forEach((p, j) => {
+    svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    p.svg = svg;
+    text(4, 16, p.title, { class: "title" });
+    for (const t of p.ticks) {
+      el("line", { x1: p.x0, x2: p.x1, y1: py(p, t), y2: py(p, t), stroke: css("--grid"), "stroke-width": 1 });
+      text(p.x0 - 10, py(p, t) + 4, t, { "text-anchor": "end" });
+    }
+    K.forEach((k, i) => text(px(p, i), bottom + 20, k, { "text-anchor": "middle" }));
+    text((p.x0 + p.x1) / 2, bottom + 44, "library size K", { "text-anchor": "middle" });
+    if (j === 0) {
+      el("rect", { x: p.x0, width: p.x1 - p.x0, y: py(p, BARE_CI[1]), height: py(p, BARE_CI[0]) - py(p, BARE_CI[1]),
+                   fill: css("--band") });
+      text(p.x0 + 8, py(p, BARE_CI[1]) - 6, "bare ACT, 95% interval", { class: "note" });
+      p.ci.forEach(([lo, hi], i) => el("line", { x1: px(p, i), x2: px(p, i), y1: py(p, lo), y2: py(p, hi),
+        stroke: css("--line"), "stroke-width": 1, opacity: 0.6 }));
+    }
+    el("polyline", { points: p.values.map((v, i) => `${px(p, i)},${py(p, v)}`).join(" "), fill: "none",
+                     stroke: css("--line"), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+    p.dots = p.values.map((v, i) => el("circle", { cx: px(p, i), cy: py(p, v), r: 4.5, fill: css("--line"),
+                                                    stroke: css("--bg"), "stroke-width": 2 }));
+    p.hair = el("line", { y1: top - 6, y2: bottom, stroke: css("--muted"), "stroke-width": 1, opacity: 0 });
+    // the observation the text makes about this panel
+    if (j === 0) text(p.x1, py(p, SUCCESS[4]) + 54, "within noise of bare ACT from K = 128", { class: "note", "text-anchor": "end" });
+    else text(px(p, 6) + 4, py(p, EV[6]) + 44, "+1.7 after K = 128", { class: "note", "text-anchor": "end" });
+    marks.push(p);
+  });
+
+  // hover: one column per K across both panels
+  const show = (i, evt) => {
+    marks.forEach((p) => {
+      p.hair.setAttribute("x1", px(p, i)); p.hair.setAttribute("x2", px(p, i)); p.hair.setAttribute("opacity", 0.5);
+      p.dots.forEach((d, n) => d.setAttribute("r", n === i ? 6.5 : 4.5));
+    });
+    tip.innerHTML = `<b>K = ${K[i]}</b><br>success ${SUCCESS[i].toFixed(1)}% [${CI[i][0]}, ${CI[i][1]}]<br>`
+                  + `explained variance ${EV[i].toFixed(1)}%`;
+    const r = box.getBoundingClientRect();
+    tip.style.left = `${Math.min(evt.clientX - r.left + 14, r.width - 230)}px`;
+    tip.style.top = `${evt.clientY - r.top + 14}px`;
+    tip.style.opacity = 1;
+  };
+  const hide = () => {
+    marks.forEach((p) => { p.hair.setAttribute("opacity", 0); p.dots.forEach((d) => d.setAttribute("r", 4.5)); });
+    tip.style.opacity = 0;
+  };
+  marks.forEach((p) => {
+    const step = (p.x1 - p.x0 - 24) / (K.length - 1);
+    K.forEach((k, i) => {
+      const hit = el("rect", { x: px(p, i) - step / 2, width: step, y: top - 6, height: bottom - top + 30,
+                               fill: "transparent" }, p.svg);
+      hit.addEventListener("mousemove", (e) => show(i, e));
+      hit.addEventListener("mouseleave", hide);
+    });
+    box.appendChild(p.svg);
+  });
+
+  const body = document.querySelector("#ksweep-table tbody");
+  K.forEach((k, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${k}</td><td>${SUCCESS[i].toFixed(1)}</td><td>[${CI[i][0]}, ${CI[i][1]}]</td><td>${EV[i].toFixed(1)}</td>`;
+    body.appendChild(tr);
+  });
+})();
+
+// copy buttons
+document.querySelectorAll(".copy").forEach((b) => b.addEventListener("click", async () => {
+  const s = document.getElementById(b.dataset.target).innerText;
+  try { await navigator.clipboard.writeText(s); b.textContent = "Copied"; }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(document.getElementById(b.dataset.target));
+          getSelection().removeAllRanges(); getSelection().addRange(r); b.textContent = "Selected"; }
+  setTimeout(() => { b.textContent = "Copy"; }, 1500);
+}));
+</script>
+</body>
+</html>

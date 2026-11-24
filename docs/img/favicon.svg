@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="64"
+   height="64"
+   viewBox="0.000 3.829 69.629 69.596"
+   version="1.1"
+   id="svg2167"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="IRL_Logo_Light_blue.svg"
+   inkscape:export-filename="IRL_Logo_Light_blue.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2169"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="222.03153"
+     inkscape:cy="284.96403"
+     inkscape:window-width="1720"
+     inkscape:window-height="1367"
+     inkscape:window-x="1720"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2164">
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect8459"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect8459"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
+    <filter
+       id="mask-powermask-path-effect19141_inverse"
+       inkscape:label="filtermask-powermask-path-effect19141"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect19141_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect19141_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-54.7952,-52.257927)">
+    <rect
+       style="font-size:14.9084px;line-height:1.05;font-family:Nasalization;-inkscape-font-specification:Nasalization;letter-spacing:0px;word-spacing:0px;display:inline;fill:none;fill-opacity:1;stroke:none;stroke-width:2.15026;stroke-opacity:1"
+       id="rect8427"
+       width="173.23909"
+       height="78.25338"
+       x="54.7952"
+       y="52.257927"
+       inkscape:label="background_backdrop" />
+    <rect
+       style="font-size:14.9084px;line-height:1.05;font-family:Nasalization;-inkscape-font-specification:Nasalization;letter-spacing:0px;word-spacing:0px;display:inline;fill:#23a1e0;fill-opacity:1;stroke:none;stroke-width:0.26867"
+       id="rect8429"
+       width="69.715302"
+       height="69.714958"
+       x="54.7952"
+       y="55.99456"
+       ry="0"
+       inkscape:label="background_gradient"
+       inkscape:export-filename="rect8429.png"
+       inkscape:export-xdpi="150"
+       inkscape:export-ydpi="150" />
+    <path
+       id="path8431"
+       style="font-size:14.9084px;line-height:1.05;font-family:Nasalization;-inkscape-font-specification:Nasalization;letter-spacing:0px;word-spacing:0px;display:inline;fill:none;fill-opacity:1;stroke-width:2.14935"
+       d="m 185.89785,61.618765 h -62.47108 c 0.0837,-0.105318 0,58.244535 0,58.244535 l 62.47108,0.28232 c 7.01343,0.0322 12.65978,-4.96726 12.65978,-11.13752 V 72.756384 c 0,-6.170252 -5.64625,-11.137619 -12.65978,-11.137619 z"
+       sodipodi:nodetypes="sccssss"
+       inkscape:label="background_hole" />
+    <g
+       id="g8445"
+       transform="matrix(1.0746759,0,0,1.0746759,-65.915926,-3.7064423)"
+       style="display:inline">
+      <g
+         id="g8437"
+         inkscape:label="robot"
+         style="display:inline"
+         mask="none">
+        <path
+           id="path8433"
+           mask="none"
+           style="font-size:70.5556px;line-height:1.25;font-family:Nasalization;-inkscape-font-specification:Nasalization;letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:0.264583"
+           class="robot_color_1"
+           inkscape:label="robot_R"
+           d="M 148.12734 64.671601 A 6.8610001 6.8610001 0 0 1 149.56221 68.870435 A 6.8610001 6.8610001 0 0 1 148.16869 73.013009 L 155.03964 73.009643 L 155.5758 73.009162 C 155.58331 73.009158 155.59042 73.009631 155.59792 73.009643 L 157.9267 73.009643 C 159.19466 72.579333 160.25381 71.58931 160.72048 70.233181 C 161.47381 68.043927 160.40199 65.726765 158.28302 64.871637 C 157.34481 64.748488 156.34922 64.683622 155.29353 64.683622 L 148.12734 64.671601 z M 162.91895 66.132441 C 163.56226 67.617771 163.67274 69.339529 163.10264 70.996299 C 162.58034 72.51408 161.56636 73.745543 160.2954 74.571463 C 161.25145 75.427458 161.83448 76.574594 162.07649 77.856671 C 162.46613 79.179644 163.47416 80.238529 164.79621 80.685547 C 166.23919 81.173457 167.82697 80.855522 168.971 79.849819 C 170.03349 78.915803 170.55645 77.525532 170.38616 76.135688 C 170.38596 76.134412 170.38589 76.133117 170.38568 76.131841 C 169.68973 71.807995 167.3084 68.081783 162.91895 66.132441 z M 161.81298 81.823733 C 161.22305 83.580704 159.94801 85.036648 157.82332 85.631151 C 156.69055 86.114408 155.83002 87.091466 155.50367 88.303267 C 155.12394 89.71325 155.52986 91.212013 156.56828 92.238593 C 157.60637 93.26482 159.10956 93.654175 160.51467 93.258969 L 160.51467 93.258488 C 166.55544 91.557681 169.5228 86.882592 170.35298 81.949237 C 168.56491 83.364314 166.16974 83.788092 163.9951 83.052801 C 163.18471 82.778781 162.44805 82.357675 161.81298 81.823733 z M 138.85018 86.023529 L 137.78268 93.893699 L 151.48371 93.893699 L 162.32702 112.27105 L 171.40365 112.27105 L 161.60429 95.533418 C 161.46896 95.581254 161.33161 95.62386 161.19316 95.662768 L 161.19364 95.664691 C 161.09127 95.693524 160.9884 95.718426 160.88541 95.742109 C 158.70726 96.242996 156.40882 95.598502 154.80931 94.017279 C 153.13417 92.361281 152.47676 89.92617 153.08929 87.651708 C 153.24529 87.072452 153.47846 86.526411 153.77595 86.023529 L 138.85018 86.023529 z M 160.51755 93.262816 L 160.5214 93.277722 C 160.52141 93.277239 160.5204 93.268874 160.52044 93.268586 L 160.52044 93.268105 L 160.51755 93.262816 z " />
+        <g
+           id="g8485"
+           style="display:inline;stroke:#000000;stroke-width:0.999999;stroke-opacity:1"
+           inkscape:label="robot_gaps"
+           transform="translate(-3.4937758)"
+           mask="none" />
+        <path
+           style="display:inline;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+           id="path8435"
+           inkscape:label="robot_gripper"
+           class="gripper_color_1"
+           transform="rotate(-172.21951)"
+           sodipodi:type="arc"
+           sodipodi:cx="-150.71361"
+           sodipodi:cy="-48.896812"
+           sodipodi:rx="3.8605139"
+           sodipodi:ry="3.8605139"
+           sodipodi:start="0.78539816"
+           sodipodi:end="5.4977871"
+           sodipodi:arc-type="arc"
+           d="m -147.98381,-46.167017 a 3.8605139,3.8605139 0 0 1 -5.45959,0 3.8605139,3.8605139 0 0 1 0,-5.459591 3.8605139,3.8605139 0 0 1 5.45959,0"
+           sodipodi:open="true"
+           inkscape:transform-center-x="-0.25436188"
+           inkscape:transform-center-y="-0.049315832" />
+      </g>
+      <g
+         id="g8443"
+         transform="translate(-11.183385,-0.0774747)"
+         style="display:inline;fill:#000000;fill-opacity:1;stroke:none"
+         inkscape:label="human">
+        <path
+           style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 133.52718,112.34348 7.86992,0.003 5.91494,-43.423015 -9.31466,11.04774 -8.89002,0.0021 z"
+           id="path8439"
+           sodipodi:nodetypes="cccccc"
+           class="human_color_1"
+           inkscape:label="human_body" />
+        <circle
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-opacity:1"
+           id="circle8441"
+           cx="136.86418"
+           cy="68.947815"
+           class="human_color_1"
+           inkscape:label="human_head"
+           r="5.1100001" />
+      </g>
+    </g>
+    
+  </g>
+</svg>

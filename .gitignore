@@ -1,0 +1,14 @@
+__pycache__/
+*.egg-info/
+.venv/
+.vscode/
+.pytest_cache/
+# local data and outputs of the reproduction scripts
+/data/
+/checkpoints/
+/results/
+# the page uses the MP4s; only the README GIF is tracked
+/docs/teaser/library.gif
+/docs/teaser/costs.gif
+/docs/teaser/library-dark.gif
+/docs/teaser/costs-dark.gif

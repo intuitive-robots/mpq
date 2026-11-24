@@ -1,0 +1,42 @@
+[project]
+name = "mpq"
+version = "0.1.0"
+description = "Quantized execution of action chunks over a library of demonstration segments"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+authors = [
+    { name = "Maximilian Xiling Li" },
+    { name = "Nils Blank" },
+    { name = "Paul Mattes" },
+    { name = "Pankhuri Vanjani" },
+    { name = "Rudolf Lioutikov" },
+]
+dependencies = ["torch>=2.2", "numpy>=1.26"]
+
+[project.urls]
+Homepage = "https://intuitive-robots.github.io/mpq"
+Repository = "https://github.com/intuitive-robots/mpq"
+
+[project.optional-dependencies]
+# Training and evaluation: LeRobot's Diffusion Policy and the official LIBERO
+# (hf-libero, robosuite 1.4.0), at the LeRobot commit used for the paper.
+libero = [
+    "lerobot[diffusion,libero] @ git+https://github.com/huggingface/lerobot.git@73dbb6f43a5088583706c91fb73c6957bca5f806",
+    "h5py>=3.10",
+]
+test = ["pytest>=8"]
+# docs/src/teaser.py (the animations); also needs ffmpeg and the Noto Sans font
+docs = ["matplotlib>=3.8"]
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

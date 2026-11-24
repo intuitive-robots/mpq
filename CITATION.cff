@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper."
+title: "MPQ: Movement Prototype Quantization"
+license: MIT
+repository-code: "https://github.com/intuitive-robots/mpq"
+url: "https://intuitive-robots.github.io/mpq"
+authors:
+  - family-names: Li
+    given-names: Maximilian Xiling
+  - family-names: Blank
+    given-names: Nils
+  - family-names: Mattes
+    given-names: Paul
+  - family-names: Vanjani
+    given-names: Pankhuri
+  - family-names: Lioutikov
+    given-names: Rudolf
+preferred-citation:
+  type: article
+  title: "What Does a Skill Vocabulary Cost? A Closed-Loop Decomposition over Demonstrated Motions"
+  journal: "arXiv preprint"
+  year: 2026
+  authors:
+    - family-names: Li
+      given-names: Maximilian Xiling
+    - family-names: Blank
+      given-names: Nils
+    - family-names: Mattes
+      given-names: Paul
+    - family-names: Vanjani
+      given-names: Pankhuri
+    - family-names: Lioutikov
+      given-names: Rudolf
