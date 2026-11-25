@@ -1,7 +1,7 @@
 # What Does a Skill Vocabulary Cost? A Closed-Loop Decomposition over Demonstrated Motions
 
 [![Project page](https://img.shields.io/badge/Project-page-2563c9)](https://intuitive-robots.github.io/mpq)
-[![Paper](https://img.shields.io/badge/Paper-PDF-b31b1b)](docs/Li2026_MPQ.pdf)
+[![arXiv](https://img.shields.io/badge/arXiv-2611.32858-b31b1b)](https://arxiv.org/abs/2611.32858)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776ab)](pyproject.toml)
 
@@ -183,7 +183,7 @@ Repeated evaluations of one checkpoint vary by up to 3.5 points.
 @article{li2026skillvocabulary,
   title   = {What Does a Skill Vocabulary Cost? A Closed-Loop Decomposition over Demonstrated Motions},
   author  = {Li, Maximilian Xiling and Blank, Nils and Mattes, Paul and Vanjani, Pankhuri and Lioutikov, Rudolf},
-  journal = {arXiv preprint},
+  journal = {arXiv preprint arXiv:2611.32858},
   year    = {2026}
 }
 ```

@@ -18,8 +18,13 @@ authors:
 preferred-citation:
   type: article
   title: "What Does a Skill Vocabulary Cost? A Closed-Loop Decomposition over Demonstrated Motions"
-  journal: "arXiv preprint"
+  journal: "arXiv preprint arXiv:2611.32858"
   year: 2026
+  url: "https://arxiv.org/abs/2611.32858"
+  identifiers:
+    - type: doi
+      value: "10.48550/arXiv.2611.32858"
+      description: "arXiv"
   authors:
     - family-names: Li
       given-names: Maximilian Xiling
